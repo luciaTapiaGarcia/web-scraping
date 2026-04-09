@@ -76,3 +76,17 @@ conn = sqlite3.connect("covid_data.db")
 df.to_sql("covid_paises", conn, if_exists="replace", index=False)
 conn.close()
 print("Datos guardados correctamente en SQLite")
+
+import matplotlib.pyplot as plt
+# Top 10 países con más casos
+#nlargest(10, "Total_Casos") para obtener las 10 filas con los valores más altos en la columna "Total_Casos"
+top10_casos = df.nlargest(10, "Total_Casos")
+# Colores pastel simples
+colores_pastel = ["pink", "plum", "lightblue", "lavender", "lightpink",
+                   "skyblue", "thistle", "mistyrose", "powderblue", "violet"]
+# Gráfico de barras
+plt.bar(top10_casos["Pais"], top10_casos["Total_Casos"], color=colores_pastel)
+plt.title("Top 10 países con más casos COVID-19 ")
+plt.ylabel("Total de casos")
+plt.tight_layout()
+plt.show()
